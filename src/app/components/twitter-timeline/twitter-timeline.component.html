@@ -1,0 +1,29 @@
+<div class="px-5 py-4 my-4 mw mx-auto rounded-lg w-[300px] bg-gray-700 flex flex-col gap-y-2 justify-center shadow-lg shadow-grey-500/50">
+		<mat-progress-bar
+		 	*ngIf="loading"
+			mode="indeterminate"></mat-progress-bar>
+		<h2
+			class="text-center text-xl text-white font-bold tracking-wider underline decoration-red-500">
+			Busca un usuario!
+		</h2>
+		<input
+				class="rounded-lg border-2 border-blue-300 text-lg text-white p-2"
+				type="text"
+				[(ngModel)]="search"
+				placeholder="🔎 buscar..."
+		/>
+		<button
+			mat-flat-button
+			class="mb-4 bg-red-500 text-white uppercase"
+			(click)="change()"
+		>
+			Buscar
+		</button>
+		<div *ngIf="!changes" class="h-100">
+			<ngx-twitter-timeline
+					[source]="source"
+					[options]="{ height: '400', width: '300', theme: 'dark' }"
+					(onLoad)="onLoad($event)"
+			></ngx-twitter-timeline>
+		</div>
+</div>

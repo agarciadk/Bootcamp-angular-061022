@@ -1,0 +1,46 @@
+<div>
+	<div class="flex flex-row justify-between mb-4">
+		<p>{{owner.firstName}} {{owner.lastName}}</p>
+		<p class="text-gray-700"><small>{{owner.address}} ({{owner.city}})</small></p>
+	</div>
+	<mat-expansion-panel>
+		<mat-expansion-panel-header>
+			<mat-panel-title>
+				Mascotas de {{owner.firstName}}
+			</mat-panel-title>
+		</mat-expansion-panel-header>
+			<div *ngIf="owner.pets.length > 0; else noPets">
+				<ul>
+					<li class="flex flex-row gap-x-1 items-center mb-2" *ngFor="let pet of owner.pets">
+						<button
+							class="w-8 h-8 bg-red-600 rounded-full"
+							(click)="removePet(pet.id)"
+							title="borrar mascota">
+								<mat-icon class="text-white" aria-hidden="false" aria-label="Example home icon" fontIcon="delete"></mat-icon>
+							</button>
+						<p class="text-gray-700">{{pet.name}} ({{pet.type.name}})</p>
+					</li>
+				</ul>
+			</div>
+	</mat-expansion-panel>
+
+	<button
+	 	class="mt-2"
+		*ngIf="mode === 'mostrar'"
+		mat-mini-fab color="primary"
+		title="Añadir mascota"
+		(click)="changeMode()"
+	>
+		<mat-icon>add</mat-icon>
+	</button>
+	<pet-form
+		*ngIf="mode === 'añadir'"
+		[ownerId]="owner.id"
+		[petTypes]="petTypes"
+		(addPetEmitter)="addPet($event)"
+		(closeFormEmitter)="changeMode()"
+	></pet-form>
+</div>
+<ng-template #noPets>
+		<p class="mt-1 text-center text-gray-700">No hay mascotas</p>
+</ng-template>	
